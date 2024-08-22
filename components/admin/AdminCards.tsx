@@ -6,7 +6,7 @@ import useSWR from 'swr'
 
 
 const AdminCards =  () => {
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 
   const { data:allTransaction, error, isLoading } = useSWR('/api/transection/admin/all', fetcher)
@@ -16,7 +16,6 @@ const AdminCards =  () => {
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
 
-  console.log("data", allTransaction)
 
   return (
     <div className="flex flex-wrap justify-around items-center gap-2 p-8">
