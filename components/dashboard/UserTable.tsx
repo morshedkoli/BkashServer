@@ -43,7 +43,7 @@ import { UserBox } from "@/components/dashboard/UserBox";
 
 
 export function UserTable() {
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 
   const { data:users, error, isLoading } = useSWR('/api/users', fetcher)
