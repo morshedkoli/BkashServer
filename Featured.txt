@@ -1,0 +1,100 @@
+1. Jakir Apps Feature
+
+*Dynamic Naver Top with Name and Category
+Login Logout Option
+Footer
+User Login, Registration, Password Recover Option
+User Profile Dashboard
+User Role
+Client, admin, Partner
+
+Client:
+Send Money
+Recharge History
+Send History
+
+admin
+
+add user, 
+active /deactive user
+edit user email 
+add balance to user
+remove balance from user
+
+User List with Active status and balance
+
+send money pending request all user
+all history of all user
+history with specific user
+comission with parcentize
+
+
+
+partner:
+
+send money pending request
+history
+
+
+
+
+partner accept request, after they see the number, 
+admin can see who accept , and sender name also,
+after accept a partner all partner can't see the request
+
+partner complate the request and submit the number and transection id
+
+after this part account credited with same amount of request amount
+
+
+
+
+
+users
+
+id
+name
+email
+mobile
+Password
+Otp
+balance
+active
+Role
+createdat
+updatedAt
+
+
+
+
+transection
+
+id
+number
+amount
+first balance
+last balance
+sender number
+transection id
+type--bkash--nagad
+status---- pending, accepted,complated, cancel
+
+clientid users id
+partnerid users id
+
+createdat
+updatedAt
+
+
+Recharge
+
+id
+amount
+paid medium
+remarks
+clientid users id
+
+createdat
+updatedAt
+
+

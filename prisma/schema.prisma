@@ -1,0 +1,104 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String    @unique
+  mobile   String    @unique
+  password String
+  otp      String
+  balance  Int
+  active   Boolean
+  role     String
+  users    User[]
+  partners Partner[]
+
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model User {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String        @unique
+  mobile       String        @unique
+  password     String
+  otp          String
+  balance      Int
+  active       Boolean
+  role         String
+  transections Transection[]
+  recharges    Recharge[]
+  Admin        Admin?        @relation(fields: [adminId], references: [id])
+  adminId      String?       @db.ObjectId
+  createdAt    DateTime      @default(now()) @db.Timestamp()
+  updatedAt    DateTime      @default(now()) @updatedAt @db.Timestamp()
+}
+
+model Partner {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String        @unique
+  mobile       String        @unique
+  password     String
+  otp          String
+  balance      Int
+  active       Boolean
+  role         String
+  transections Transection[]
+  payments     Payment[]
+  Admin        Admin?        @relation(fields: [adminId], references: [id])
+  adminId      String?       @db.ObjectId
+  createdAt    DateTime      @default(now()) @db.Timestamp()
+  updatedAt    DateTime      @default(now()) @updatedAt @db.Timestamp()
+}
+
+model Transection {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  number        String
+  amount        Int
+  firstBalance  Int
+  lastBalance   Int
+  senderNumber  String
+  transectionId String
+  type          String
+  status        String
+
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+  client    User?    @relation(fields: [clientId], references: [id])
+  clientId  String?  @db.ObjectId
+  partner   Partner? @relation(fields: [partnerId], references: [id])
+  partnerId String?  @db.ObjectId
+}
+
+model Recharge {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  amount     Int
+  paidMedium String
+  remarks    String
+  client     User?   @relation(fields: [clientId], references: [id])
+  clientId   String? @db.ObjectId
+
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model Payment {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount     Int
+  paidMedium String
+  remarks    String
+  partner    Partner? @relation(fields: [partnerId], references: [id])
+  partnerId  String?  @db.ObjectId
+
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
