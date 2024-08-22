@@ -1,7 +1,6 @@
 "use client"
 import { CheckCheck, Hand, RefreshCcw, SquareCheckBig } from "lucide-react";
 import DashboardCard from "../dashboard/DashboardCard";
-import { fetchAllTransactions } from "@/actions/fatchTransactions";
 import useSWR from 'swr'
 
 
