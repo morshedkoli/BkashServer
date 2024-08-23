@@ -13,7 +13,6 @@ export async function POST(req, res) {
         where: {
           email: reqBody["email"],
           password: reqBody["password"],
-          role: reqBody["role"],
         },
       });
       if (!result) {
