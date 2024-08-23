@@ -4,10 +4,11 @@ import { CreateToken } from "@/utility/JWTTokenHelper";
 
 export async function POST(req, res) {
   try {
+    const prisma = new PrismaClient();
+
     const reqBody = await req.json();
 
     if (reqBody["role"] === "admin") {
-      const prisma = new PrismaClient();
       const result = await prisma.admin.findUnique({ where: reqBody });
       if (!result) {
         return NextResponse.json({
@@ -30,7 +31,6 @@ export async function POST(req, res) {
     }
 
     if (reqBody["role"] === "partner") {
-      const prisma = new PrismaClient();
       const result = await prisma.partner.findUnique({ where: reqBody });
       if (!result) {
         return NextResponse.json({ status: "Partner Not Found", data: result });
@@ -48,7 +48,6 @@ export async function POST(req, res) {
         );
       }
     } else {
-      const prisma = new PrismaClient();
       const result = await prisma.user.findUnique({ where: reqBody });
       if (!result) {
         return NextResponse.json({ status: "User Not Found", data: result });

@@ -41,11 +41,12 @@ export default  function LoginForm() {
        setSubmit(true)
         const options= {method:"POST", body:JSON.stringify(values)}
         let res =  await (await fetch("/api/user/login", options)).json()
+        console.log("result",res)
 
         if( res["status"] === "success"){
             toast.success("You are logged in successfully.")
-          window.location.href="/"
             setSubmit(false)
+          window.location.href="/"
             
         }else{
             toast.error(`${res['data']}`)
