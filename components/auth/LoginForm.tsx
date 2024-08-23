@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useState } from "react"
 import Spinner from "../Spinner/Spinner"
@@ -26,7 +25,6 @@ const formSchema = z.object({
 
 export default  function LoginForm() {
 
-    const router = useRouter()
     const [submit,setSubmit] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -40,16 +38,15 @@ export default  function LoginForm() {
     const  handleSubmit = async (values:z.infer<typeof formSchema>) => {
        setSubmit(true)
         const options= {method:"POST", body:JSON.stringify(values)}
-        let res =  await (await fetch("/api/user/login", options)).json()
-        console.log("result",res)
+        let {status, data} =  await (await fetch("/api/user/login", options)).json()
 
-        if( res["status"] === "success"){
+        if( status === "success"){
             toast.success("You are logged in successfully.")
             setSubmit(false)
           window.location.href="/"
             
         }else{
-            toast.error(`${res['data']}`)
+            toast.error(`${status}`)
             setSubmit(false)
         }
 
