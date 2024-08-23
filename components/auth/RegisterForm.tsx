@@ -32,7 +32,7 @@ const formSchema = z.object({
     path:["passwordConfirm"]
 });
 
-export default  function RegisterForm() {
+export default  function RegisterForm({admin}) {
     const router = useRouter()
     const [submit,setSubmit] = useState(false)
 
@@ -93,7 +93,8 @@ if(res["status"] === "success"){
 
   return (
 
-    <Card className="w-full max-w-sm">
+   <div className="flex items-center justify-center h-screen -mt-20">
+     <Card className="w-full max-w-sm ">
 
 <CardHeader>
         <CardTitle className="text-2xl">Register</CardTitle>
@@ -188,13 +189,16 @@ if(res["status"] === "success"){
     </Form>
 
     
-<div className="my-3 d-flex">
-    <Link href="/auth/login" className="mx-2 nav-link">Login |</Link>
-    <Link href="/auth/emailVerify">Forget Password</Link>
-</div>
+                {
+                    !admin && <div className="my-3 d-flex">
+                    <Link href="/auth/login" className="mx-2 nav-link">Login |</Link>
+                    <Link href="/auth/emailVerify">Forget Password</Link>
+                </div>
+                }
     </CardContent>
 
     </Card>
+   </div>
    
   )
 }

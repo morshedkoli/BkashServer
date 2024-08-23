@@ -1,5 +1,9 @@
+import SendForm from "@/components/SendForm";
+
 const Send = () => {
-    return ( <div>Send Page</div> );
+    return ( 
+        <SendForm/>
+     );
 }
  
 export default Send;

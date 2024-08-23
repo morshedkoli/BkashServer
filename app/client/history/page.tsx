@@ -1,5 +1,7 @@
-const ClientHistory = () => {
-    return ( <div>Client History</div> );
+const AdminHistory = () => {
+    return ( 
+        <div>hello</div>
+     );
 }
  
-export default ClientHistory;
+export default AdminHistory;

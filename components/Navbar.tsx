@@ -35,9 +35,9 @@ const Navbar = ({isLogin}:NaverProps) => {
 
 {
   isLogin?(
-    <>
+    <div >
     
-<DropdownMenu>
+<DropdownMenu >
   <DropdownMenuTrigger className="focus:outline-none">
   <Avatar>
     <AvatarImage src="https://github.com/shadcn.png" alt="shadcn"/>
@@ -48,7 +48,7 @@ const Navbar = ({isLogin}:NaverProps) => {
     <DropdownMenuLabel><Link href="/profile">My Account</Link></DropdownMenuLabel>
     <DropdownMenuSeparator />
     <DropdownMenuItem>
-        <Link href="#">
+        <Link href="/profile">
         Profile
         </Link>
     </DropdownMenuItem>
@@ -57,7 +57,7 @@ const Navbar = ({isLogin}:NaverProps) => {
       </a></DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
-    </>
+    </div>
   ):(
     <>
    <Link href="/auth/login"> <Button >Login</Button>

@@ -1,138 +1,73 @@
-
+"use client"
 import {
     Command,
-    CommandDialog,
     CommandEmpty,
-    CommandGroup,
     CommandInput,
     CommandItem,
     CommandList,
     CommandSeparator,
-    CommandShortcut,
   } from "@/components/ui/command"
-import { VerifyToken } from "@/utility/JWTTokenHelper";
-  
-import { LayoutDashboard,  Settings, User, History,  Send, LoaderIcon, Hand} from 'lucide-react'
-import { cookies } from "next/headers";
+
+import AdminMenu from "./sidebar/AdminMenu";
+import PartnerMenu from "./sidebar/PartnerMenu";
+import UserMenu from "./sidebar/UserMenu";
+import useSWR from "swr";
+import { CircleUserRound, User, Wallet } from "lucide-react";
 import Link from "next/link";
 
 
 
 
+const Sidebar = () => {
 
-const Sidebar = async() => {
+  const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-  const cookieStore = cookies()
-    const token = cookieStore.get("token")
 
-let user;
+  const { data:user, error, isLoading } = useSWR('/api/user/profile/details', fetcher)
 
-    if (token) {
-      user = await VerifyToken(token["value"]);
-    }
+
     
     return ( 
 
 
-       
-        <Command className="bg-secondary rounded-none  " >
+  <Command className="bg-secondary rounded-none " >
   <CommandInput placeholder="Type a command or search..." />
   <CommandList >
     <CommandEmpty>No results found.</CommandEmpty>
+
+    <CommandItem className="font-bold gap-4">
+        <CircleUserRound />
+        <Link className="uppercase" href="/profile">{user?.["data"]?.name}</Link>
+       
+        </CommandItem>
+        <CommandItem className="font-bold gap-4">
+        <Wallet />
+        <p>{user?.["data"]?.balance}</p>
+       
+        </CommandItem>
    
    {
-    user?.role==="admin" && (
-      <CommandGroup heading="Admin">
-      <CommandItem>
-        <LayoutDashboard className="mr-2 h-4 w-4"/>
-        <Link href="/">Dashboard</Link>
-      </CommandItem>
-      <CommandItem>
-      <User className="mr-2 h-4 w-4"/>
-      <Link href="/admin/users">Users</Link>
-      </CommandItem>
-      <CommandItem>
-      <Send className="mr-2 h-4 w-4"/>
-      <Link href="/send">Send Money</Link>
-      </CommandItem>
-      <CommandItem>
-      <LoaderIcon className="mr-2 h-4 w-4"/>
-      <Link href="/admin/pendings">Pending Request</Link>
-      </CommandItem>
-
-      <CommandItem>
-      <History className="mr-2 h-4 w-4"/>
-      <Link href="/admin/history">History</Link>
-      </CommandItem>
-
-      <CommandItem>
-      <Settings className="mr-2 h-4 w-4"/>
-      <Link href="/settings">Settings</Link>
-      </CommandItem>
-
-    </CommandGroup>
+    user?.["data"]?.role==="admin" && (
+     <AdminMenu/>
     )
 
-    
    }
     
     {
-      user?.role === "partner" && (
-    <CommandGroup heading="Partner">
-
-    <CommandItem>
-      <Hand className="mr-2 h-4 w-4"/>
-      <Link href="/partner/accepted">Accepted Request</Link>
-      </CommandItem>
-
-    
-      <CommandItem>
-      <LoaderIcon className="mr-2 h-4 w-4"/>
-      <Link href="/partner/pendings">Pending Request</Link>
-      </CommandItem>
-
-      <CommandItem>
-      <History className="mr-2 h-4 w-4"/>
-      <Link href="/partner/history">History</Link>
-      </CommandItem>
-
-      <CommandItem>
-      <Settings className="mr-2 h-4 w-4"/>
-      <Link href="/settings">Settings</Link>
-      </CommandItem>
-    </CommandGroup>
+      user?.["data"]?.role === "partner" && (
+   <PartnerMenu/>
       )
     }
 
-
     <CommandSeparator />
    {
-    user?.role === "user" && (
-      <CommandGroup heading="Client">
-      <CommandItem>
-        <Send className="mr-2 h-4 w-4"/>
-        <Link href="/send">Send Money</Link>
-        </CommandItem>
-  
-        <CommandItem>
-        <LoaderIcon className="mr-2 h-4 w-4"/>
-        <Link href="/client/pendings">Pending Request</Link>
-        </CommandItem>
-  
-        <CommandItem>
-        <History className="mr-2 h-4 w-4"/>
-        <Link href="/client/history">History</Link>
-        </CommandItem>
-  
-        <CommandItem>
-        <Settings className="mr-2 h-4 w-4"/>
-        <Link href="/settings">Settings</Link>
-        </CommandItem>
-      </CommandGroup>
+     user?.["data"]?.role=== "user" && (
+     <UserMenu/>
     )
    }
   </CommandList>
 </Command>
+      
 
 
     );

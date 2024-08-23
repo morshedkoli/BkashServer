@@ -31,7 +31,7 @@ export default function RootLayout({
         <Navbar isLogin={isLogin}/>
 
         <div className="flex flex-col md:flex-row">
-    <div className={`bg-secondary md:h-screen  w-full md:w-60 ${isLogin?" ": "hidden"}`}>
+    <div className={`bg-secondary  md:w-60 ${isLogin?" ": "hidden"} `}>
       <Sidebar />
     </div>
     <main className="flex-1">{children}</main>

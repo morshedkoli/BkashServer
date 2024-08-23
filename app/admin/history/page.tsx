@@ -1,7 +1,7 @@
 const AdminHistory = () => {
-    return ( <div>
-        admin History
-    </div> );
+    return ( 
+        <div>hello</div>
+     );
 }
  
 export default AdminHistory;
