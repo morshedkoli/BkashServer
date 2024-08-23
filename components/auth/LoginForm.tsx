@@ -36,6 +36,7 @@ export default  function LoginForm() {
    
 
     const  handleSubmit = async (values:z.infer<typeof formSchema>) => {
+        toast.success("Login Submit.")
        setSubmit(true)
         const options= {method:"POST", body:JSON.stringify(values)}
         let {status, data} =  await (await fetch("/api/user/login", options)).json()
