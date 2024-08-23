@@ -11,6 +11,7 @@ export async function POST(req, res) {
     if (reqBody["role"] === "admin") {
       console.log("into the admin block");
       const result = await prisma.admin.findUnique({ where: reqBody });
+      console.log(result);
       if (!result) {
         return NextResponse.json({
           status: "fail",
@@ -25,7 +26,7 @@ export async function POST(req, res) {
         let expireDuration = new Date(Date.now() + 24 * 60 * 60 * 1000);
         const cookieString = `token=${token}; expires=${expireDuration.toUTCString()}; path=/`;
         return NextResponse.json(
-          { status: "success", data: token },
+          { status: "success", data: "Login Successfully" },
           { status: 200, headers: { "set-cookie": cookieString } }
         );
       }
