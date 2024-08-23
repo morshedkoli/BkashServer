@@ -9,9 +9,13 @@ export async function POST(req, res) {
     const reqBody = await req.json();
 
     if (reqBody["role"] === "admin") {
-      console.log("into the admin block");
-      const result = await prisma.admin.findUnique({ where: reqBody });
-      console.log("email", result["email"]);
+      const result = await prisma.admin.findUnique({
+        where: {
+          email: reqBody["email"],
+          password: reqBody["password"],
+          role: reqBody["role"],
+        },
+      });
       if (!result) {
         return NextResponse.json({
           status: "fail",
