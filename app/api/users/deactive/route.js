@@ -6,27 +6,27 @@ export async function GET(req, res) {
   try {
     const prisma = new PrismaClient();
     let { searchParams } = new URL(req.url);
-    let clientId = searchParams.get("id");
+    let userId = searchParams.get("userId");
     let headerList = headers();
     let id = headerList.get("id");
+    //userCount
 
     const admin = await prisma.admin.findUnique({ where: { id } });
-
     if (!admin) {
       return NextResponse.json({
         status: "fail",
         data: "You have no permission",
       });
     } else {
-      const result = await prisma.user.findUnique({
-        where: { id: clientId },
-        include: {
-          transections: true,
-          recharges: true,
-        },
+      let result = await prisma.user.update({
+        where: { id: userId },
+        data: { active: false },
       });
 
-      return NextResponse.json({ status: "success", data: result });
+      return NextResponse.json({
+        status: "success",
+        data: "User Deactivated successfully",
+      });
     }
   } catch (e) {
     return NextResponse.json({ status: "fail", data: e });

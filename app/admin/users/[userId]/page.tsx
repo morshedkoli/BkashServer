@@ -1,21 +1,15 @@
-"use client"
 
 import UserEdit from "@/components/admin/UserEdit";
-import useSWR from "swr";
+import { getUser } from "@/utility/utils";
 
-const page = ({params}) => {
+const page =async ({params}) => {
 
-    const fetcher = (url: string) => fetch(url).then(res => res.json());
-
-
-    const { data:client, error, isLoading } = useSWR(`/api/users/single?id=${params.userId}`, fetcher)
-  
-  console.log("data", client)
+  const user = await getUser(params.userId)
 
 
     return ( 
 
-        <UserEdit client={client?.["data"]}/>
+        <UserEdit client={user}/>
      );
 }
  

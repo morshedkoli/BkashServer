@@ -6,21 +6,35 @@ export async function GET(req, res) {
   try {
     let headerList = headers();
     let id = headerList.get("id");
-
+    let role = headerList.get("role");
     const prisma = new PrismaClient();
-
-    const admin = await prisma.admin.findUnique({
-      where: { id: id },
-    });
-
-    if (!admin) {
+    if (role === "admin") {
+      const result = await prisma.transection.findMany({
+        where: { status: "pending" },
+      });
       return NextResponse.json(
-        { status: "fail", data: "Admin not found" },
+        { status: "success", data: result },
+        { headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (role === "partner") {
+      const result = await prisma.transection.findMany({
+        where: {
+          status: "pending",
+          partnerId: id,
+        },
+      });
+      return NextResponse.json(
+        { status: "success", data: result },
         { headers: { "Content-Type": "application/json" } }
       );
     } else {
       const result = await prisma.transection.findMany({
-        where: { status: "pending" },
+        where: {
+          status: "pending",
+          clientId: id,
+        },
       });
       return NextResponse.json(
         { status: "success", data: result },

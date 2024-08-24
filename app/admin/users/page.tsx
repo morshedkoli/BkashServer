@@ -1,15 +1,12 @@
 import { UserTable } from "@/components/dashboard/UserTable";
-import { Button } from "@/components/ui/button";
+import Title from "@/components/Title";
 
 const Users = () => {
     return ( <div>
 
-        <div className="flex justify-between m-10">
-            <h2>User List</h2>
-          
+        <div className=" m-5">
+          <Title title="User List" des="All users list are here" button={true}/>
 
-        <Button> 
-            <a href="/admin/users/new">New User</a></Button>
         </div>
 
         <div>

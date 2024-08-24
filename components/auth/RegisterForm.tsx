@@ -63,14 +63,14 @@ export default  function RegisterForm({admin}) {
             let res =  await (await fetch("/api/user/register", options)).json()
     
 
-if(res["status"] === "success"){
-    toast.success("You are Register successfully as user.")
-    router.push('/auth/login')
-    setSubmit(false)
-}else{
-    toast.error(`There is problem, ${res['data'].name}`)
-    setSubmit(false)
-}
+        if(res["status"] === "success"){
+        toast.success("You are Register successfully as user.")
+         router.push('/auth/login')
+        setSubmit(false)
+        }else{
+        toast.error(`There is problem, ${res['data'].name}`)
+        setSubmit(false)
+    }
 
            
         }

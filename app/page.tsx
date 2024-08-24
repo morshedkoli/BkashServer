@@ -1,18 +1,24 @@
-import DashboardCard from "@/components/dashboard/DashboardCard";
-import { DollarSign, History, Newspaper, Send, User } from "lucide-react";
-import PlainLayout from "@/components/layout/Plain-Layout";
+
 import AdminCards from "@/components/admin/AdminCards";
+import { cookies } from "next/headers";
 
 
 
-export default async function Home() {
+const Home =async()=> {
 
- 
+  
   return (
-   
+    <>
 
-   <AdminCards/>
+  
+        <AdminCards/>
+     
+    </>
+   
 
   
   );
 }
+
+
+export default Home;

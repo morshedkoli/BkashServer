@@ -23,7 +23,7 @@ const AdminCards =  () => {
       <DashboardCard
         title="Pending"
         color="bg-red-200"
-        count={pendings?.['data'].length || 0}
+        count={pendings?.['data'].length}
         icon={<RefreshCcw size={40} strokeWidth={3} />}
       />
       <DashboardCard
@@ -35,13 +35,13 @@ const AdminCards =  () => {
       <DashboardCard
         title="Today Complete"
         color="bg-green-200"
-        count={today?.['data'].length ||0}
+        count={today?.['data'].length}
         icon={<CheckCheck size={40} strokeWidth={3} />}
       />
       <DashboardCard
         title="Completed"
         color="bg-green-400"
-        count={allTransaction?.['data'].length ||0}
+        count={allTransaction?.['data'].length}
         icon={<SquareCheckBig size={40} strokeWidth={3} />}
       />
     </div>

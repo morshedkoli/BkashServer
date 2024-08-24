@@ -39,6 +39,12 @@ export async function POST(req, res) {
       const result = await prisma.partner.findUnique({ where: reqBody });
       if (!result) {
         return NextResponse.json({ status: "Partner Not Found", data: result });
+      }
+      if (result["active"] === false) {
+        return NextResponse.json({
+          status: "success",
+          data: "Your account is deactivated",
+        });
       } else {
         let token = await CreateToken(
           result["email"],
@@ -56,6 +62,13 @@ export async function POST(req, res) {
       const result = await prisma.user.findUnique({ where: reqBody });
       if (!result) {
         return NextResponse.json({ status: "User Not Found", data: result });
+      }
+
+      if (result["active"] === false) {
+        return NextResponse.json({
+          status: "success",
+          data: "Your account is deactivated",
+        });
       } else {
         let token = await CreateToken(
           result["email"],

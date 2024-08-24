@@ -3,25 +3,41 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
-  console.log("Call The all data fatcher");
   try {
     let headerList = headers();
     let id = headerList.get("id");
-
+    let role = headerList.get("role");
     const prisma = new PrismaClient();
+    if (role === "admin") {
+      const result = await prisma.transection.findMany({
+        where: {
+          status: "completed",
+        },
+      });
 
-    const admin = await prisma.admin.findUnique({
-      where: { id: id },
-    });
-
-    if (!admin) {
       return NextResponse.json(
-        { status: "fail", data: "Admin not found" },
+        { status: "success", data: result },
+        { headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (role === "partner") {
+      const result = await prisma.transection.findMany({
+        where: {
+          status: "completed",
+          partnerId: id,
+        },
+      });
+      return NextResponse.json(
+        { status: "success", data: result },
         { headers: { "Content-Type": "application/json" } }
       );
     } else {
       const result = await prisma.transection.findMany({
-        where: { status: "completed" },
+        where: {
+          sstatus: "completed",
+          clientId: id,
+        },
       });
       return NextResponse.json(
         { status: "success", data: result },
@@ -29,7 +45,6 @@ export async function GET(req, res) {
       );
     }
   } catch (e) {
-    console.log(e);
     return NextResponse.json({
       status: "fail",
       data: e,
