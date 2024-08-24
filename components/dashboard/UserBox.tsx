@@ -9,15 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import Link from "next/link"
+
 
 export function UserBox({data}) {
   return (
@@ -32,8 +25,13 @@ export function UserBox({data}) {
       <CardContent className="font-bold text-3xl"> 
        <h2>{data?.["balance"]}</h2>
       </CardContent>
+      <CardContent className="font-bold flex flex-col"> 
+       <p>{data?.["active"]?"Activated":"Deactivated"} </p>
+       {data?.["active"] &&  <Button variant="destructive">Deactive</Button>} 
+      
+      </CardContent>
       <CardFooter className="flex justify-between">
-        <Button>Recharge</Button>
+        <Button><Link href={`/admin/users/${data?.["id"]}`}>Recharge</Link></Button>
       </CardFooter>
     </Card>
   )
